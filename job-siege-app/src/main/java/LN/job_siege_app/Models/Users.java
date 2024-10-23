@@ -1,6 +1,7 @@
 package LN.job_siege_app.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,13 +10,13 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
