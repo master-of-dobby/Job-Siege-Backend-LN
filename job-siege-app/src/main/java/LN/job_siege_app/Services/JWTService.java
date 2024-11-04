@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
@@ -19,15 +20,8 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private String secretKey = "";
 
-    public JWTService() throws NoSuchAlgorithmException {
-
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-        SecretKey sk = keyGenerator.generateKey();
-        secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-
-    }
+    private final String secretKey = "S3cure!@#R@nd0m$Tr0ngK3y%FoRJWT1234567890";
 
     public String generateToken(String email){
 
@@ -45,7 +39,7 @@ public class JWTService {
     }
 
     private SecretKey getKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = secretKey.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -81,3 +75,13 @@ public class JWTService {
         return extractClaim(token, Claims::getExpiration);
     }
 }
+
+//    private String secretKey = "f1e3cc459404653ace3ccc8158a43875c44f793b450d029b9fac6a03a040e1fd618b2f320f92e852119047ff387bbe080ec3b755d46dba214a0feb1a50872772d3c9dc21eeb9db647f6fe0fad2605fecdd358acc301f41abba6913c1bb048a7a1ce211162054d6a24ad9438dd13a968e7bf3d736cafd6fc806a02c1b33093514db0848d20ada9810fe9d510b4ccbfdfcf0740e492c60ae205ec3489ce966810576f9ab74c24a4945c3ff8dbf4f0ba0facfac68437f0f7a5bba4a2107c01048778399b34190a415afec13185b0c3a339d839b1b061870e357eb8ff4aa0c11e5fc0bb06c8473755a614cc12169829f737779364a0bdf99456f6e96c3055043ed68";
+
+//    public JWTService() throws NoSuchAlgorithmException {
+//
+//        KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+//        SecretKey sk = keyGenerator.generateKey();
+//        secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+//
+//    }
